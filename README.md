@@ -27,7 +27,7 @@ The web application consists of two main components:
 ## Instructions to Run the Application
 
 1. **Clone the Repository:**
-git clone <repository_url>
+
 2. **Install Dependencies:**
 pip install -r requirements.txt
 3. **Setup MongoDB:**
