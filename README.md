@@ -42,6 +42,21 @@ streamlit run customer.py
 5. **Run the Owner Statistics Dashboard:**
 - Access the owner statistics dashboard via the provided URL.
 
+### Model Architecture: Sequential Model with Embedding Layer and Dense Layers
+
+The sentiment analysis model follows a sequential architecture(Simple Artifical Neural Network) with the following components:
+
+1. **Embedding Layer:** Converts words into dense vectors of fixed size, capturing semantic meaning and relationships between words.
+  
+2. **Global Average Pooling Layer:** Reduces the dimensionality of the input data by averaging the embeddings across all words in each review.
+
+3. **Dense Layers:** A series of dense (fully connected) layers with rectified linear unit (ReLU) activation functions to learn complex patterns and relationships in the data.
+
+4. **Output Layer:** A single dense layer with a sigmoid activation function, producing a probability score indicating the likelihood that a review expresses positive sentiment.
+
+This architecture is commonly used for text classification tasks like sentiment analysis, where the goal is to classify text into predefined categories or predict a continuous value based on text inputs.
+
+
 ## Training the Sentiment Analysis Model (Model.ipynb)
 
 To train the sentiment analysis model for your own dataset, follow these instructions:
