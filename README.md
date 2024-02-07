@@ -52,9 +52,7 @@ To train the sentiment analysis model for your own dataset, follow these instruc
 2. **Prepare Your Dataset:**
    - you can download the Dataset used in this project either from this [git-repo](DataSet.csv) or from Kaggle
      https://www.kaggle.com/datasets/d4rklucif3r/restaurant-reviews
-   - Replace the sample dataset (`DataSet.csv`) with your own dataset containing two columns: one for the reviews and one for the corresponding labels (positive/negative).
-   - Ensure that your dataset is in CSV format and is accessible from the same directory as the notebook.
-   - I got the dataset from 
+   - Load the sample dataset (`DataSet.csv`) or Replace it with your own dataset containing two columns: one for the reviews and one for the corresponding labels (positive/negative).
 
 4. **Run the Notebook:**
    - Open the `Model.ipynb` notebook in Jupyter Notebook.
