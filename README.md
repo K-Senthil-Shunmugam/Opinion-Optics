@@ -41,3 +41,36 @@ streamlit run customer.py
 
 5. **Run the Owner Statistics Dashboard:**
 - Access the owner statistics dashboard via the provided URL.
+
+## Training the Sentiment Analysis Model (Model.ipynb)
+
+To train the sentiment analysis model for your own dataset, follow these instructions:
+
+1. **Ensure Dependencies:**
+   - Make sure you have Jupyter Notebook installed along with the required Python libraries mentioned in the provided `Model.ipynb` file.
+
+2. **Prepare Your Dataset:**
+   - you can download the Dataset used in this project either from this [git-repo](DataSet.csv) or from Kaggle
+     https://www.kaggle.com/datasets/d4rklucif3r/restaurant-reviews
+   - Replace the sample dataset (`DataSet.csv`) with your own dataset containing two columns: one for the reviews and one for the corresponding labels (positive/negative).
+   - Ensure that your dataset is in CSV format and is accessible from the same directory as the notebook.
+   - I got the dataset from 
+
+4. **Run the Notebook:**
+   - Open the `Model.ipynb` notebook in Jupyter Notebook.
+   - Execute each cell in the notebook sequentially to load the dataset, preprocess the data, train the model, and save the trained model.
+
+5. **Adjust Hyperparameters (Optional):**
+   - You can adjust the hyperparameters such as vocabulary size, embedding dimension, maximum sequence length, and number of epochs according to your requirements.
+
+6. **Save the Trained Model:**
+   - After training, the model will be saved as `sentiment_analysis_model.h5` in the same directory.
+   - You can use this trained model for inference in the customer portal (`customer.py`) provided in this repository.
+
+7. **Evaluate Model Performance (Optional):**
+   - Optionally, you can evaluate the performance of your trained model on a separate test dataset to assess its accuracy and other metrics.
+
+8. **Customize as Needed:**
+   - Feel free to customize the notebook or extend the functionality based on your specific requirements.
+   - You can also integrate additional features or improve the model architecture for better performance.
+
