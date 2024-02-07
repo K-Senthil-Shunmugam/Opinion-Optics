@@ -34,6 +34,7 @@ pip install -r requirements.txt
 - Install MongoDB and start the MongoDB service.
 - Create a new database named `reviews`.
 - Create a collection named `restaurant_reviews` within the `reviews` database.
+- Update the connection string in the secrets.toml file.
 
 4. **Run the Customer Portal:**
 streamlit run customer.py
