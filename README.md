@@ -57,6 +57,12 @@ The sentiment analysis model follows a sequential architecture(Simple Artifical 
 
 This architecture is commonly used for text classification tasks like sentiment analysis, where the goal is to classify text into predefined categories or predict a continuous value based on text inputs.
 
+### Model Metrics: 
+
+![image](https://github.com/K-Senthil-Shunmugam/Opinion-Optics/assets/113205555/2356c371-a002-49c1-9c2d-66a9f1fcb743)
+
+![image](https://github.com/K-Senthil-Shunmugam/Opinion-Optics/assets/113205555/c4b84aff-8fb1-4c38-8a4c-8305493a9631)
+
 
 ## Training the Sentiment Analysis Model (Model.ipynb)
 
