@@ -59,7 +59,17 @@ This architecture is commonly used for text classification tasks like sentiment 
 
 ### Model Metrics: 
 ![image](https://github.com/K-Senthil-Shunmugam/Opinion-Optics/assets/113205555/93a78db2-312e-4cd4-afb6-819eeea35040)
+![image](https://github.com/K-Senthil-Shunmugam/Opinion-Optics/assets/113205555/472f6ab9-76b0-4399-855f-54879f78e74a)
+![image](https://github.com/K-Senthil-Shunmugam/Opinion-Optics/assets/113205555/7b449dea-d924-4c97-9104-a301f121c0d9)
+![image](https://github.com/K-Senthil-Shunmugam/Opinion-Optics/assets/113205555/68453c62-0654-44ce-8826-35dc5fd22899)
+              precision    recall  f1-score   support
 
+           0       0.79      0.80      0.80        96
+           1       0.82      0.81      0.81       104
+
+    accuracy                           0.81       200
+   macro avg       0.80      0.80      0.80       200
+weighted avg       0.81      0.81      0.81       200
 
 ## Training the Sentiment Analysis Model (Model.ipynb)
 
