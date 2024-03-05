@@ -58,7 +58,10 @@ The sentiment analysis model follows a sequential architecture(Simple Artifical 
 This architecture is commonly used for text classification tasks like sentiment analysis, where the goal is to classify text into predefined categories or predict a continuous value based on text inputs.
 
 ### Model Metrics: 
+
 Model Accuracy : 80.5%
+
+
 ![image](https://github.com/K-Senthil-Shunmugam/Opinion-Optics/assets/113205555/93a78db2-312e-4cd4-afb6-819eeea35040)
 ![image](https://github.com/K-Senthil-Shunmugam/Opinion-Optics/assets/113205555/472f6ab9-76b0-4399-855f-54879f78e74a)
 ![image](https://github.com/K-Senthil-Shunmugam/Opinion-Optics/assets/113205555/7b449dea-d924-4c97-9104-a301f121c0d9)
