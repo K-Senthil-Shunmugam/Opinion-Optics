@@ -7,8 +7,8 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 from PIL import Image
 import json
 import pymongo
-
-
+from wordcloud import WordCloud
+import matplotlib.pyplot as plt
 
 
 # Define HyperParameters
@@ -50,9 +50,6 @@ st.title('Opinion Optics-Review Portal')
 # Get user input
 user_review = st.text_area('Leave your review here:')
 
-
-
-
 if st.button('Submit'):
     # Tokenize and pad the user's input
     sequences = tokenizer.texts_to_sequences([user_review])
@@ -71,14 +68,28 @@ if st.button('Submit'):
     collection.insert_one(review_data)
     st.success('Review Updated')
 
-
 # Display recent 3 negative and recent 3 positive comments
 recent_reviews = collection.find().sort('_id', pymongo.DESCENDING).limit(10)
 
-st.subheader('Recent Comments:')
-for idx, review in enumerate(recent_reviews, start=1):
-    st.write(f"{review['Review']}")
-    st.write('---')
+# Separate positive and negative reviews
+negative_reviews = [review['Review'] for review in recent_reviews if review['Sentiment'] == 'Negative']
+positive_reviews = [review['Review'] for review in recent_reviews if review['Sentiment'] == 'Positive']
 
+# Generate word clouds
+negative_wordcloud = WordCloud(width=800, height=400, background_color='white').generate(' '.join(negative_reviews))
+positive_wordcloud = WordCloud(width=800, height=400, background_color='white').generate(' '.join(positive_reviews))
+
+# Display word clouds
+st.subheader('Word Cloud for Positive Reviews:')
+plt.figure(figsize=(10, 5))
+plt.imshow(positive_wordcloud, interpolation='bilinear')
+plt.axis('off')
+st.pyplot()
+
+st.subheader('Word Cloud for Negative Reviews:')
+plt.figure(figsize=(10, 5))
+plt.imshow(negative_wordcloud, interpolation='bilinear')
+plt.axis('off')
+st.pyplot()
 
 
