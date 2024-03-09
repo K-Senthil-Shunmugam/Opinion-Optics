@@ -23,6 +23,7 @@ The web application consists of two main components:
    - Displays the overall sentiment distribution of reviews.
    - Shows overall statistics including the total number of reviews, positive reviews, and negative reviews.
    - Displays recent negative and positive comments.
+   - Displays a word cloud of positive and negative comments.
 
 ## Instructions to Run the Application
 
