@@ -1,81 +1,81 @@
 import streamlit as st
-import pandas as pd
-import numpy as np
-from tensorflow.keras.models import load_model
-from tensorflow.keras.preprocessing.text import Tokenizer
-from tensorflow.keras.preprocessing.sequence import pad_sequences
-from PIL import Image
-import json
 import pymongo
+import json
+import matplotlib.pyplot as plt
+from PIL import Image
+from wordcloud import WordCloud
 
-
-
-
-# Define HyperParameters
-vocab_size = 10000
-max_length = 100
-trunc_type = 'post'
-padding_type = 'post'
-oov_tok = "<OOV>"
-
-# Load the sentiment analysis model
-model = load_model('sentiment_analysis_model.h5')
-
-# Read from JSON file
-with open('Vocabulary.json', 'r') as json_file:
-    loaded_X_train_list = json.load(json_file)
-
-# Convert Python lists back to NumPy arrays
-X_train = np.array(loaded_X_train_list)
-
-tokenizer = Tokenizer(num_words=vocab_size, oov_token=oov_tok)
-tokenizer.fit_on_texts(X_train)
-
+# Disable WordCloud Warning
+st.set_option('deprecation.showPyplotGlobalUse', False)
 # MongoDB connection
 client = pymongo.MongoClient(st.secrets["mongo_url"])
-# Replace 'your_mongo_connection_string' with your MongoDB connection string
 db = client['reviews']
 collection = db['restaurant_reviews']
 
-# Streamlit app
 
-# Load the image
 image = Image.open(r'logo.png')
-
-# Display the image
 st.image(image, use_column_width=True)
+st.title('Opinion Optics - Owner Statistics')
 
-st.title('Opinion Optics-Review Portal')
+# Retrieve recent reviews from MongoDB
+recent_reviews_cursor = collection.find().sort('_id', pymongo.DESCENDING).limit(10)
+recent_reviews = list(recent_reviews_cursor)
 
-# Get user input
-user_review = st.text_area('Leave your review here:')
+# Display overall statistics
+total_reviews = collection.count_documents({})
+positive_reviews = collection.count_documents({'Sentiment': 'Positive'})
+negative_reviews = collection.count_documents({'Sentiment': 'Negative'})
 
+# Create pie chart for sentiment distribution
+sentiment_data = [positive_reviews, negative_reviews]
+labels = ['Positive', 'Negative']
 
+fig1, ax1 = plt.subplots()
+ax1.pie(sentiment_data, labels=labels, autopct='%1.1f%%', startangle=90)
+ax1.axis('equal')  
+st.subheader('Sentiment Distribution:')
+st.pyplot(fig1)
 
+st.subheader('Overall Statistics:')
+st.write(f"Total Reviews: {total_reviews}")
+st.write(f"Positive Reviews: {positive_reviews}")
+st.write(f"Negative Reviews: {negative_reviews}")
 
-if st.button('Submit'):
-    # Tokenize and pad the user's input
-    sequences = tokenizer.texts_to_sequences([user_review])
-    padded = pad_sequences(sequences, maxlen=max_length, padding=padding_type, truncating=trunc_type)
+# Display recent negative and recent positive comments
+recent_negative_reviews = collection.find({'Sentiment': 'Negative'}).sort('_id', pymongo.DESCENDING).limit(5)
+recent_positive_reviews = collection.find({'Sentiment': 'Positive'}).sort('_id', pymongo.DESCENDING).limit(5)
 
-    # Make prediction
-    prediction = model.predict(padded)[0][0]
-    sentiment = 'Positive' if prediction >= 0.5 else 'Negative'
-
-    # Display result
-    st.write(f"Review: {user_review}")
-    st.write(f"Sentiment: {sentiment}")
-
-    # Save the review and sentiment to MongoDB
-    review_data = {'Review': user_review, 'Sentiment': sentiment, 'Score': float(prediction)}  # Convert to Python float
-    collection.insert_one(review_data)
-    st.success('Review Updated')
-
-
-# Display recent 3 negative and recent 3 positive comments
-recent_reviews = collection.find().sort('_id', pymongo.DESCENDING).limit(10)
-
-st.subheader('Recent Comments:')
-for idx, review in enumerate(recent_reviews, start=1):
+st.subheader('Recent Negative Comments:')
+for idx, review in enumerate(recent_negative_reviews, start=1):
     st.write(f"{review['Review']}")
     st.write('---')
+
+st.subheader('Recent Positive Comments:')
+for idx, review in enumerate(recent_positive_reviews, start=1):
+    st.write(f"{review['Review']}")
+    st.write('---')
+
+# Separate positive and negative reviews and extract text data
+negative_reviews = collection.find({'Sentiment': 'Negative'}).sort('_id', pymongo.DESCENDING)
+positive_reviews= collection.find({'Sentiment': 'Positive'}).sort('_id', pymongo.DESCENDING)
+
+negative_reviews_text = ' '.join(review['Review'] for review in list(negative_reviews))
+positive_reviews_text = ' '.join(review['Review'] for review in list(positive_reviews))
+
+
+# Generate word clouds
+negative_wordcloud = WordCloud(width=800, height=400, background_color='white').generate(negative_reviews_text)
+positive_wordcloud = WordCloud(width=800, height=400, background_color='white').generate(positive_reviews_text)
+
+# Display word clouds
+st.subheader('Word Cloud for Positive Reviews:')
+plt.figure(figsize=(10, 5))
+plt.imshow(positive_wordcloud, interpolation='bilinear')
+plt.axis('off')
+st.pyplot()
+
+st.subheader('Word Cloud for Negative Reviews:')
+plt.figure(figsize=(10, 5))
+plt.imshow(negative_wordcloud, interpolation='bilinear')
+plt.axis('off')
+st.pyplot()
