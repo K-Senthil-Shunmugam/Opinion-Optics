@@ -79,5 +79,3 @@ st.subheader('Recent Comments:')
 for idx, review in enumerate(recent_reviews, start=1):
     st.write(f"{review['Review']}")
     st.write('---')
-
-
